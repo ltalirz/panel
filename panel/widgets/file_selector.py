@@ -73,6 +73,7 @@ class FileSelector(CompositeWidget):
         List of selected files.""")
 
     def __init__(self, directory=None, **params):
+        from ..pane import Markdown
         if directory is not None:
             params['directory'] = os.path.abspath(os.path.expanduser(directory))
         super(FileSelector, self).__init__(**params)
@@ -93,7 +94,10 @@ class FileSelector(CompositeWidget):
             self._back, self._forward, self._up, self._directory, self._go,
             margin=(0, 10), width_policy='max'
         )
-        self._composite = Column(self._nav_bar, Divider(margin=(0, 20)), self._selector, **layout)
+        self._selector._whitelist.insert(0, Markdown('### Selected files', margin=(-10, 10)))
+        self._selector._blacklist.insert(0, Markdown('### File Browser', margin=(-10, 10)))
+        self._composite = Column(self._nav_bar, Divider(margin=(0, 20)),
+                                 self._selector, **layout)
 
         # Set up state
         self._stack = []

@@ -514,9 +514,9 @@ class CrossSelector(CompositeWidget, MultiSelect):
         self._lists[selected].options = merged if merged else {}
         self._lists[not selected].options = leftovers if leftovers else {}
         if len(self._lists[True].options):
-            self._whitelist[1] = self._lists[True]
+            self._whitelist[-1] = self._lists[True]
         else:
-            self._whitelist[1] = self._placeholder
+            self._whitelist[-1] = self._placeholder
         self.value = [self._items[o] for o in self._lists[True].options if o != '']
         self._apply_filters()
 
